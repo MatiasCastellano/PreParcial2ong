@@ -16,6 +16,7 @@ public class Donacion {
     @Column(name="donor_name", nullable = false, length = 20)
     private String nombre;
 
+    @Enumerated(EnumType.STRING)
     @Column(name="donor_type", nullable = false)
     private Tipo tipo;
 
@@ -25,9 +26,10 @@ public class Donacion {
     @Column(name= "donation_date", nullable = false)
     private LocalDate fecha;
 
-    @Column(name="status", nullable = false)
+    @Column(name="category", nullable = false)
     private String categoria;
 
+    @Enumerated(EnumType.STRING)
     @Column(name="status", nullable = false)
     private Estado estado;
 

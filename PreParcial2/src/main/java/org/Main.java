@@ -47,6 +47,10 @@ public class Main {
                     resultado = logica.crearDonacion(crearDonacion);
                     System.out.println(resultado.getMessage());
                     break;
+
+                case 5:
+                    continuar=false;
+                    break;
             }
         }
     } catch (Exception e) {
@@ -58,6 +62,6 @@ public class Main {
         System.out.println("1. Crear Donacion");
         System.out.println("2. ..");
         System.out.println("3. ..");
-        System.out.println("4. Salir");
+        System.out.println("5. Salir");
     }
 }

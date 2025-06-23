@@ -16,38 +16,42 @@ public class Main {
         Logica logica= Logica.getInstance();
         ResultadoDTO resultado= new ResultadoDTO();
         Scanner in=new Scanner(System.in);
-
-        while(continuar){
+    try {
+        while (continuar) {
             mostrarMenu();
-            int accion= in.nextInt();
-            switch (accion){
+            int accion = in.nextInt();
+            switch (accion) {
                 case 1:
                     in.nextLine();
                     System.out.println("Ingrese el nombre del donante");
-                    String nombre= in.nextLine();
+                    String nombre = in.nextLine();
                     System.out.println("Ingrese el tipo del donante: 1) Individual 2) Compania");
-                    Donacion.Tipo tipoEnum= null;
-                    int tipo= in.nextInt();
-                    if(tipo==1){
-                        tipoEnum= Donacion.Tipo.INDIVIDUAL;
-                    } else if (tipo==2) {
-                        tipoEnum= Donacion.Tipo.COMPANY;
-                    }else{
-                        tipoEnum= Donacion.Tipo.INDIVIDUAL; //por defecto se asigna individual
+                    Donacion.Tipo tipoEnum = null;
+                    int tipo = in.nextInt();
+                    if (tipo == 1) {
+                        tipoEnum = Donacion.Tipo.INDIVIDUAL;
+                    } else if (tipo == 2) {
+                        tipoEnum = Donacion.Tipo.COMPANY;
+                    } else {
+                        tipoEnum = Donacion.Tipo.INDIVIDUAL; //por defecto se asigna individual
                     }
                     System.out.println("Ingrese el monto");
-                    int monto= in.nextInt();
+                    int monto = in.nextInt();
+                    in.nextLine();
                     System.out.println("Ingrese la fecha de donacion: yyyy-MM-dd");
-                    String fechaD= in.nextLine();
-                    LocalDate fecha= LocalDate.parse(fechaD);
+                    String fechaD = in.nextLine();
+                    LocalDate fecha = LocalDate.parse(fechaD);
                     System.out.println("Ingrese la categoria");
-                    String categoria= in.nextLine();
-                    CrearDonacionDTO crearDonacion= new CrearDonacionDTO(nombre,tipoEnum,monto,fecha,categoria);
-                    resultado= logica.crearDonacion(crearDonacion);
+                    String categoria = in.nextLine();
+                    CrearDonacionDTO crearDonacion = new CrearDonacionDTO(nombre, tipoEnum, monto, fecha, categoria);
+                    resultado = logica.crearDonacion(crearDonacion);
                     System.out.println(resultado.getMessage());
                     break;
             }
         }
+    } catch (Exception e) {
+        System.out.println(e);
+    }
     }
     private static void mostrarMenu () {
         System.out.println("Ingrese la opcion que desea hacer:");

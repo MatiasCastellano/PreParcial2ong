@@ -1,8 +1,11 @@
 package org;
 
+import org.dto.CrearDonacionDTO;
 import org.dto.ResultadoDTO;
+import org.models.Donacion;
 import org.service.Logica;
 
+import java.time.LocalDate;
 import java.util.Scanner;
 
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
@@ -13,8 +16,8 @@ public class Main {
         Logica logica= Logica.getInstance();
         ResultadoDTO resultado= new ResultadoDTO();
         Scanner in=new Scanner(System.in);
-        while(continuar){
 
+        while(continuar){
             mostrarMenu();
             int accion= in.nextInt();
             switch (accion){
@@ -22,7 +25,27 @@ public class Main {
                     in.nextLine();
                     System.out.println("Ingrese el nombre del donante");
                     String nombre= in.nextLine();
-                    
+                    System.out.println("Ingrese el tipo del donante: 1) Individual 2) Compania");
+                    Donacion.Tipo tipoEnum= null;
+                    int tipo= in.nextInt();
+                    if(tipo==1){
+                        tipoEnum= Donacion.Tipo.INDIVIDUAL;
+                    } else if (tipo==2) {
+                        tipoEnum= Donacion.Tipo.COMPANY;
+                    }else{
+                        tipoEnum= Donacion.Tipo.INDIVIDUAL; //por defecto se asigna individual
+                    }
+                    System.out.println("Ingrese el monto");
+                    int monto= in.nextInt();
+                    System.out.println("Ingrese la fecha de donacion: yyyy-MM-dd");
+                    String fechaD= in.nextLine();
+                    LocalDate fecha= LocalDate.parse(fechaD);
+                    System.out.println("Ingrese la categoria");
+                    String categoria= in.nextLine();
+                    CrearDonacionDTO crearDonacion= new CrearDonacionDTO(nombre,tipoEnum,monto,fecha,categoria);
+                    resultado= logica.crearDonacion(crearDonacion);
+                    System.out.println(resultado.getMessage());
+                    break;
             }
         }
     }

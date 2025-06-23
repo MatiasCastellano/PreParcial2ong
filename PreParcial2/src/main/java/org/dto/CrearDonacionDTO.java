@@ -12,7 +12,7 @@ public class CrearDonacionDTO {
     private LocalDate fecha;
     private String categoria;
 
-    public CrearDonacionDTO(){};
+
     public CrearDonacionDTO(String nom, Donacion.Tipo tipo1, double cant, LocalDate fecha1,String cat){
         this.nombre=nom;
         this.tipo=tipo1;

@@ -1,5 +1,6 @@
 package org;
 
+import org.dto.AsignarDonacionDTO;
 import org.dto.CrearDonacionDTO;
 import org.dto.ResultadoDTO;
 import org.models.Donacion;
@@ -47,6 +48,19 @@ public class Main {
                     resultado = logica.crearDonacion(crearDonacion);
                     System.out.println(resultado.getMessage());
                     break;
+                case 2:
+                    System.out.println("Ingrese el id de donacion a asignar");
+                    long id = in.nextLong();
+                    in.nextLine();
+                    System.out.println("Ingrese la fecha de asignacion: yyyy-MM-dd");
+                    String fechaA = in.nextLine();
+                    LocalDate fechaAsig = LocalDate.parse(fechaA);
+                    System.out.println("Ingrese las notas");
+                    String notas = in.nextLine();
+                    AsignarDonacionDTO parametros= new AsignarDonacionDTO(id,fechaAsig,notas);
+                    resultado= logica.asignarDonacion(parametros);
+                    System.out.println(resultado.getMessage());
+                    break;
 
                 case 5:
                     continuar=false;
@@ -60,7 +74,7 @@ public class Main {
     private static void mostrarMenu () {
         System.out.println("Ingrese la opcion que desea hacer:");
         System.out.println("1. Crear Donacion");
-        System.out.println("2. ..");
+        System.out.println("2. Asignar Donacion");
         System.out.println("3. ..");
         System.out.println("5. Salir");
     }

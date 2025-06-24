@@ -2,6 +2,7 @@ package org.models;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.*;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 
 @Entity
@@ -21,7 +22,7 @@ public class Donacion {
     private Tipo tipo;
 
     @Column(name= "amount", nullable = false)
-    private double cantidad;
+    private BigDecimal cantidad;
 
     @Column(name= "donation_date", nullable = false)
     private LocalDate fecha;
@@ -46,7 +47,7 @@ public class Donacion {
         COMPANY
     }
     public Donacion(){};
-    public Donacion(String nombre, Tipo tipo1,double cant, LocalDate fechaDon,String categoria){
+    public Donacion(String nombre, Tipo tipo1,BigDecimal cant, LocalDate fechaDon,String categoria){
         this.nombre=nombre;
         this.tipo=tipo1;
         this.cantidad=cant;
@@ -80,11 +81,11 @@ public class Donacion {
         this.tipo = tipo;
     }
 
-    public double getCantidad() {
+    public BigDecimal getCantidad() {
         return cantidad;
     }
 
-    public void setCantidad(double cantidad) {
+    public void setCantidad(BigDecimal cantidad) {
         this.cantidad = cantidad;
     }
 

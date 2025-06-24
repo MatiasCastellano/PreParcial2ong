@@ -3,11 +3,15 @@ package org;
 import org.dto.AsignarDonacionDTO;
 import org.dto.CrearDonacionDTO;
 import org.dto.ResultadoDTO;
+import org.dto.TotalRecaudadoPorTipoDTO;
 import org.models.Donacion;
 import org.service.Logica;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Scanner;
+import java.util.Timer;
 
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
@@ -37,7 +41,7 @@ public class Main {
                         tipoEnum = Donacion.Tipo.INDIVIDUAL; //por defecto se asigna individual
                     }
                     System.out.println("Ingrese el monto");
-                    int monto = in.nextInt();
+                    BigDecimal monto = in.nextBigDecimal();
                     in.nextLine();
                     System.out.println("Ingrese la fecha de donacion: yyyy-MM-dd");
                     String fechaD = in.nextLine();
@@ -61,6 +65,9 @@ public class Main {
                     resultado= logica.asignarDonacion(parametros);
                     System.out.println(resultado.getMessage());
                     break;
+                case 3:
+                    List<TotalRecaudadoPorTipoDTO> resultados= logica.consultaTotalTipoDonante();
+                    imprimir(resultados);
 
                 case 5:
                     continuar=false;
@@ -75,7 +82,15 @@ public class Main {
         System.out.println("Ingrese la opcion que desea hacer:");
         System.out.println("1. Crear Donacion");
         System.out.println("2. Asignar Donacion");
-        System.out.println("3. ..");
+        System.out.println("3. Consultar total recaudado por tipo");
         System.out.println("5. Salir");
+    }
+    private static void imprimir(List<TotalRecaudadoPorTipoDTO> resultado){
+        for(TotalRecaudadoPorTipoDTO r: resultado){
+            System.out.println("Tipo: "+ r.getTipoDonacion());
+            System.out.println("Cantidad: "+ r.getCantidad());
+            System.out.println("Total: "+ r.getMonto());
+        }
+
     }
 }

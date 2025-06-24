@@ -2,20 +2,21 @@ package org.dto;
 
 import org.models.Donacion;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 
 public class DonacionDTO {
     private long id;
     private String nombre;
     private Donacion.Tipo tipo;
-    private double cantidad;
+    private BigDecimal cantidad;
     private LocalDate fecha;
     private String categoria;
     private Donacion.Estado estado;
 
     public DonacionDTO(){};
 
-    public DonacionDTO(String nom, Donacion.Tipo tipo1, double cant, LocalDate fecha1, String cat, Donacion.Estado estado1){
+    public DonacionDTO(String nom, Donacion.Tipo tipo1, BigDecimal cant, LocalDate fecha1, String cat, Donacion.Estado estado1){
         this.nombre=nom;
         this.tipo= tipo1;
         this.cantidad=cant;
@@ -47,11 +48,11 @@ public class DonacionDTO {
         this.tipo = tipo;
     }
 
-    public double getCantidad() {
+    public BigDecimal getCantidad() {
         return cantidad;
     }
 
-    public void setCantidad(double cantidad) {
+    public void setCantidad(BigDecimal cantidad) {
         this.cantidad = cantidad;
     }
 

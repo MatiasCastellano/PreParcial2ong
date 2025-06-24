@@ -2,12 +2,14 @@ package org.dto;
 
 import org.models.Donacion;
 
+import java.math.BigDecimal;
+
 public class TotalRecaudadoPorTipoDTO {
     private Donacion.Tipo tipoDonacion;
-    private int cantidad;
-    private double monto;
+    private Long cantidad;
+    private BigDecimal monto;
 
-    public TotalRecaudadoPorTipoDTO(Donacion.Tipo tipo1,int cant, double montoRecaudado){
+    public TotalRecaudadoPorTipoDTO(Donacion.Tipo tipo1,Long cant, BigDecimal montoRecaudado){
         this.tipoDonacion= tipo1;
         this.cantidad=cant;
         this.monto=montoRecaudado;
@@ -20,19 +22,19 @@ public class TotalRecaudadoPorTipoDTO {
         this.tipoDonacion = tipoDonacion;
     }
 
-    public int getCantidad() {
+    public Long getCantidad() {
         return cantidad;
     }
 
-    public void setCantidad(int cantidad) {
+    public void setCantidad(Long cantidad) {
         this.cantidad = cantidad;
     }
 
-    public double getMonto() {
+    public BigDecimal getMonto() {
         return monto;
     }
 
-    public void setMonto(double monto) {
+    public void setMonto(BigDecimal monto) {
         this.monto = monto;
     }
 }

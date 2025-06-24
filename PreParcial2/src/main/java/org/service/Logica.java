@@ -1,9 +1,6 @@
 package org.service;
 
-import jakarta.persistence.criteria.CriteriaBuilder;
-import jakarta.persistence.criteria.CriteriaQuery;
-import jakarta.persistence.criteria.Predicate;
-import jakarta.persistence.criteria.Root;
+import jakarta.persistence.criteria.*;
 import org.dto.AsignarDonacionDTO;
 import org.dto.CrearDonacionDTO;
 import org.dto.ResultadoDTO;
@@ -14,6 +11,8 @@ import org.models.AsignacionDonacion;
 import org.models.Donacion;
 import org.utils.HibernateUtil;
 
+import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Logica {
@@ -83,6 +82,19 @@ public class Logica {
     }
     // 3. Total recaudado por tipo de donante
     public List<TotalRecaudadoPorTipoDTO> consultaTotalTipoDonante(){
-        
+        List<TotalRecaudadoPorTipoDTO> listaResultado= new ArrayList<>();
+        try(Session session=HibernateUtil.getSession()){
+            CriteriaBuilder cb= session.getCriteriaBuilder();
+            CriteriaQuery<TotalRecaudadoPorTipoDTO> query= cb.createQuery(TotalRecaudadoPorTipoDTO.class);
+            Root<Donacion> donacion= query.from(Donacion.class);
+            Path<Donacion.Tipo> tipo= donacion.get("tipo");
+            Expression<Long> cant= cb.count(donacion);
+            Expression<BigDecimal> suma= cb.sum(donacion.get("cantidad"));
+            query.select(cb.construct(TotalRecaudadoPorTipoDTO.class,tipo,cant,suma));
+            query.groupBy(tipo);
+            query.orderBy(cb.desc(suma));
+            listaResultado=session.createQuery(query).getResultList();
+            return listaResultado;
+        }
     }
 }

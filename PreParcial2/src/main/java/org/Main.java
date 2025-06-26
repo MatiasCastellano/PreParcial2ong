@@ -1,9 +1,6 @@
 package org;
 
-import org.dto.AsignarDonacionDTO;
-import org.dto.CrearDonacionDTO;
-import org.dto.ResultadoDTO;
-import org.dto.TotalRecaudadoPorTipoDTO;
+import org.dto.*;
 import org.models.Donacion;
 import org.service.Logica;
 
@@ -68,7 +65,11 @@ public class Main {
                 case 3:
                     List<TotalRecaudadoPorTipoDTO> resultados= logica.consultaTotalTipoDonante();
                     imprimir(resultados);
-
+                    break;
+                case 4:
+                    List<TotalRecaudadoPorCatYEstado> resultadosPorCat= logica.consultaTotalCatYEstado();
+                    imprimirPorCat(resultadosPorCat);
+                    break;
                 case 5:
                     continuar=false;
                     break;
@@ -83,6 +84,7 @@ public class Main {
         System.out.println("1. Crear Donacion");
         System.out.println("2. Asignar Donacion");
         System.out.println("3. Consultar total recaudado por tipo");
+        System.out.println("3. Consultar total por estado y categoria");
         System.out.println("5. Salir");
     }
     private static void imprimir(List<TotalRecaudadoPorTipoDTO> resultado){
@@ -91,6 +93,14 @@ public class Main {
             System.out.println("Cantidad: "+ r.getCantidad());
             System.out.println("Total: "+ r.getMonto());
         }
-
     }
+    private static void imprimirPorCat(List<TotalRecaudadoPorCatYEstado> resultado){
+        for(TotalRecaudadoPorCatYEstado r: resultado){
+            System.out.println("CATEGORIA: "+ r.getCategoria());
+            System.out.println("Donaciones recibidas: "+ r.getCantDonRecibidas());
+            System.out.println("Donaciones asignadas: "+ r.getCantDonacionesAsignadas());
+            System.out.println("Total de la categoria:  "+ r.getTotal());
+        }
+    }
+
 }

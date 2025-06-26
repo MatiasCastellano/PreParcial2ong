@@ -1,10 +1,7 @@
 package org.service;
 
 import jakarta.persistence.criteria.*;
-import org.dto.AsignarDonacionDTO;
-import org.dto.CrearDonacionDTO;
-import org.dto.ResultadoDTO;
-import org.dto.TotalRecaudadoPorTipoDTO;
+import org.dto.*;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.models.AsignacionDonacion;
@@ -92,6 +89,25 @@ public class Logica {
             Expression<BigDecimal> suma= cb.sum(donacion.get("cantidad"));
             query.select(cb.construct(TotalRecaudadoPorTipoDTO.class,tipo,cant,suma));
             query.groupBy(tipo);
+            query.orderBy(cb.desc(suma));
+            listaResultado=session.createQuery(query).getResultList();
+            return listaResultado;
+        }
+    }
+
+    //Consulta
+    public List<TotalRecaudadoPorCatYEstado> consultaTotalCatYEstado(){
+        List<TotalRecaudadoPorCatYEstado> listaResultado=new ArrayList<>();
+        try(Session session=HibernateUtil.getSession()){
+            CriteriaBuilder cb= session.getCriteriaBuilder();
+            CriteriaQuery<TotalRecaudadoPorCatYEstado> query= cb.createQuery(TotalRecaudadoPorCatYEstado.class);
+            Root<Donacion> donacion= query.from(Donacion.class);
+            Path<String> categoria= donacion.get("categoria");
+            Expression<Long> cantR= cb.sum(cb.<Long>selectCase().when(cb.equal(donacion.get("estado"), Donacion.Estado.RECEIVED),1L).otherwise(0L));
+            Expression<Long> cantA= cb.sum(cb.<Long>selectCase().when(cb.equal(donacion.get("estado"), Donacion.Estado.ASSIGNED),1L).otherwise(0L));
+            Expression<BigDecimal> suma= cb.sum(donacion.get("cantidad"));
+            query.select(cb.construct(TotalRecaudadoPorCatYEstado.class,categoria,cantR,cantA,suma));
+            query.groupBy(categoria);
             query.orderBy(cb.desc(suma));
             listaResultado=session.createQuery(query).getResultList();
             return listaResultado;

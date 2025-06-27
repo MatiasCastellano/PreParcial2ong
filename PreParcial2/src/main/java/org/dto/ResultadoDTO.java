@@ -13,6 +13,9 @@ public class ResultadoDTO {
     public void setSuccess(boolean success) {
         this.success = success;
     }
+    public boolean getSuccess(){
+        return  success;
+    }
 
     public String getMessage() {
         return message;

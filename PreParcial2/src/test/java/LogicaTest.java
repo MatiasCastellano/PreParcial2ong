@@ -1,6 +1,5 @@
 import net.bytebuddy.asm.Advice;
-import org.dto.CrearDonacionDTO;
-import org.dto.ResultadoDTO;
+import org.dto.*;
 import org.hibernate.Session;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
@@ -13,9 +12,9 @@ import org.utils.HibernateUtil;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class LogicaTest {
@@ -55,7 +54,7 @@ public class LogicaTest {
         donacion3.setCantidad(new BigDecimal("1000.10"));
         donacion3.setFecha(LocalDate.of(2025,7,16));
         donacion3.setCategoria("educacion");
-        donacion3.setEstado(Donacion.Estado.RECEIVED);
+        donacion3.setEstado(Donacion.Estado.ASSIGNED);
 
         session.persist(donacion1);
         session.persist(donacion2);
@@ -79,5 +78,38 @@ public class LogicaTest {
         CrearDonacionDTO donacion4= new CrearDonacionDTO("ministerio", Donacion.Tipo.COMPANY,new BigDecimal("1000"),LocalDate.of(2025,01,01),"cultura");
         ResultadoDTO resultado=  logica.crearDonacion(donacion4);
         assertTrue(resultado.getSuccess());
+    }
+    @Test
+    public void asignarDonacion_Ok(){
+        AsignarDonacionDTO parametros= new AsignarDonacionDTO(1,LocalDate.of(2025,06,30),"salud");
+        ResultadoDTO resultado= logica.asignarDonacion(parametros);
+        assertTrue(resultado.getSuccess());
+    }
+    @Test
+    public void asignarDonacionIneexistente_Ok(){
+        AsignarDonacionDTO parametros= new AsignarDonacionDTO(100,LocalDate.of(2025,06,30),"salud");
+        ResultadoDTO resultado= logica.asignarDonacion(parametros);
+        assertFalse(resultado.getSuccess());
+    }
+    @Test
+    public void asignarDonacionEstadoAssigned_Ok(){
+        AsignarDonacionDTO parametros= new AsignarDonacionDTO(3,LocalDate.of(2025,05,30),"educacion");
+        ResultadoDTO resultado= logica.asignarDonacion(parametros);
+        assertFalse(resultado.getSuccess()); //la donacion 3, esta cargada como estado Assignado, no es posible volverla a asignar.
+    }
+    @Test
+    public void cantidadRecaudadaPorTipo_Ok(){
+        List<TotalRecaudadoPorTipoDTO> listaResultado= logica.consultaTotalTipoDonante();
+        assertNotNull(listaResultado);
+        assertFalse(listaResultado.isEmpty());
+        assertEquals(2,listaResultado.size());
+        assertEquals(Donacion.Tipo.COMPANY, listaResultado.get(0).getTipoDonacion());
+    }
+    @Test
+    public void cantidadPorCatYEstado_Ok(){
+        List<TotalRecaudadoPorCatYEstado> listaResultado= logica.consultaTotalCatYEstado();
+        assertNotNull(listaResultado);
+        assertFalse(listaResultado.isEmpty());
+        assertEquals(listaResultado.get(0).getCantDonRecibidas(),Long.valueOf(1));
     }
 }

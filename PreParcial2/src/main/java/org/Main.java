@@ -18,7 +18,7 @@ public class Main {
         Logica logica= Logica.getInstance();
         ResultadoDTO resultado= new ResultadoDTO();
         Scanner in=new Scanner(System.in);
-    try {
+
         while (continuar) {
             mostrarMenu();
             int accion = in.nextInt();
@@ -75,16 +75,14 @@ public class Main {
                     break;
             }
         }
-    } catch (Exception e) {
-        System.out.println(e);
-    }
+
     }
     private static void mostrarMenu () {
         System.out.println("Ingrese la opcion que desea hacer:");
         System.out.println("1. Crear Donacion");
         System.out.println("2. Asignar Donacion");
         System.out.println("3. Consultar total recaudado por tipo");
-        System.out.println("3. Consultar total por estado y categoria");
+        System.out.println("4. Consultar total por estado y categoria");
         System.out.println("5. Salir");
     }
     private static void imprimir(List<TotalRecaudadoPorTipoDTO> resultado){

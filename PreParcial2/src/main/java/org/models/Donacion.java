@@ -14,7 +14,7 @@ public class Donacion {
     @Column(name= "donation_id")
     private long id;
 
-    @Column(name="donor_name", nullable = false, length = 20)
+    @Column(name="donor_name", nullable = false, length = 100)
     private String nombre;
 
     @Enumerated(EnumType.STRING)

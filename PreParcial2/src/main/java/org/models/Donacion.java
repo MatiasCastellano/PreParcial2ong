@@ -52,7 +52,6 @@ public class Donacion {
         this.tipo=tipo1;
         this.cantidad=cant;
         this.fecha=fechaDon;
-        this.fecha=fechaDon;
         this.categoria=categoria;
         this.estado= Estado.RECEIVED;
     }

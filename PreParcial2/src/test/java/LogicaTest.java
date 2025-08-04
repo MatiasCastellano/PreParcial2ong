@@ -1,4 +1,4 @@
-import net.bytebuddy.asm.Advice;
+
 import org.dto.*;
 import org.hibernate.Session;
 import org.junit.jupiter.api.AfterAll;
@@ -37,7 +37,7 @@ public class LogicaTest {
         donacion1.setTipo(Donacion.Tipo.INDIVIDUAL);
         donacion1.setCantidad(new BigDecimal("1500.05"));
         donacion1.setFecha(LocalDate.of(2025,10,10));
-        donacion1.setCategoria("eduacion");
+        donacion1.setCategoria("educacion");
         donacion1.setEstado(Donacion.Estado.RECEIVED);
 
         donacion2= new Donacion();

@@ -29,13 +29,22 @@ public class Main {
                     String nombre = in.nextLine();
                     System.out.println("Ingrese el tipo del donante: 1) Individual 2) Compania");
                     Donacion.Tipo tipoEnum = null;
-                    int tipo = in.nextInt();
-                    if (tipo == 1) {
-                        tipoEnum = Donacion.Tipo.INDIVIDUAL;
-                    } else if (tipo == 2) {
-                        tipoEnum = Donacion.Tipo.COMPANY;
-                    } else {
-                        tipoEnum = Donacion.Tipo.INDIVIDUAL; //por defecto se asigna individual
+                    boolean entradaValida=false;
+                    while(!entradaValida){
+                        try{
+                            int tipo = in.nextInt();
+                            if (tipo == 1) {
+                                tipoEnum = Donacion.Tipo.INDIVIDUAL;
+                                entradaValida=true;
+                            } else if (tipo == 2) {
+                                tipoEnum = Donacion.Tipo.COMPANY;
+                                entradaValida=true;
+                            } else{
+                                System.out.println("ingrese un valor valido, los valores posibles son 1 o 2. ");
+                            }
+                        } catch (Exception e) {
+                            throw new RuntimeException("Error :"+ e.getMessage());
+                        }
                     }
                     System.out.println("Ingrese el monto");
                     BigDecimal monto = in.nextBigDecimal();

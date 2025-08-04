@@ -28,13 +28,7 @@ public class Logica {
         ResultadoDTO resultado = new ResultadoDTO();
         try(Session session= HibernateUtil.getSession()){
             Transaction transaccion= session.beginTransaction();
-            Donacion donacion= new Donacion();
-            donacion.setNombre(crear.getNombre());
-            donacion.setTipo(crear.getTipo());
-            donacion.setCantidad(crear.getMonto());
-            donacion.setFecha(crear.getFecha());
-            donacion.setCategoria(crear.getCategoria());
-            donacion.setEstado(Donacion.Estado.RECEIVED);
+            Donacion donacion= new Donacion(crear.getNombre(), crear.getTipo(),crear.getMonto(),crear.getFecha(),crear.getCategoria());
             session.persist(donacion);
             resultado.setMessage("donacion creada con exito");
             resultado.setSuccess(true);
@@ -69,7 +63,6 @@ public class Logica {
             nuevaAsignacion.setDonacion(donacionAsignar);
             nuevaAsignacion.setFechaAsignacion(parametros.getFechaAsignacion());
             nuevaAsignacion.setNotas(parametros.getNotas());
-            session.persist(nuevaAsignacion);
             session.persist(nuevaAsignacion);
             transaccion.commit();
             resultado.setSuccess(true);
